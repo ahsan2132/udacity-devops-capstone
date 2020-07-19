@@ -1,8 +1,8 @@
 node {
     def registry1 = 'ahsan2132/testblueimage'
     def registry2 = 'ahsan2132/testgreenimage'
-    stage('Checking out git repo') {
-      echo 'Checkout...'
+    stage('Git Repo') {
+      echo 'Checkout'
       checkout scm
     }
     stage('Checking environment') {
