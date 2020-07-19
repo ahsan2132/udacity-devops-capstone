@@ -1,6 +1,6 @@
 node {
-    def registry1 = 'ahsan2132/capstone-blue'
-    def registry2 = 'ahsan2132/capstone-green'
+    def registry1 = 'ahsan2132/testblueimage'
+    def registry2 = 'ahsan2132/testgreenimage'
     stage('Checking out git repo') {
       echo 'Checkout...'
       checkout scm
@@ -16,8 +16,8 @@ node {
       sh '/usr/bin/hlint blue/Dockerfile'
       sh '/usr/bin/hlint green/Dockerfile'
     }
-    stage('Building image blue') {
-	    echo 'Building Docker image blue...'
+    stage('Blue Build') {
+	    echo 'Building blue image'
       withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
 	     	sh "sudo docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
 	     	sh "sudo docker build -t ${registry1} blue/."
@@ -25,8 +25,8 @@ node {
 	     	sh "sudo docker push ${registry1}"
       }
     }
-    stage('Building image green') {
-	    echo 'Building Docker image green...'
+    stage('Green Build') {
+	    echo 'Building green image'
       withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
 	     	sh "sudo docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
 	     	sh "sudo docker build -t ${registry2} green/."
@@ -34,13 +34,13 @@ node {
 	     	sh "sudo docker push ${registry2}"
       }
     }
-    stage('Deploying to AWS EKS') {
-      echo 'Deploying to AWS EKS...'
+    stage('EKS Deployment') {
+      echo 'AWS EKS Deployment started'
       dir ('./') {
         withAWS(credentials: 'ecr-credentials', region: 'us-west-2') {
             sh "aws eks --region us-west-2 update-kubeconfig --name test-cluster"
-            sh "kubectl apply -f blue/blue-controller.json"
-            sh "kubectl apply -f green/green-controller.json"
+            sh "kubectl apply -f blue/blue-controller2.json"
+            sh "kubectl apply -f green/green-controller3.json"
             sh "kubectl apply -f ./blue-green-service.json"
             sh "kubectl get nodes"
             sh "kubectl get pods"
