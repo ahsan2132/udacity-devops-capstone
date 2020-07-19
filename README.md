@@ -1,4 +1,5 @@
 
+<h3> EKS Stack Setup</h3>
 # use eksctl to create EKS cluster
 
 display available options and properties:
@@ -23,7 +24,7 @@ eksctl also creates the config file for _kubectl_. This means we can immediately
 kubectl get nodes
 ```
 
-<h3> Docker </h3>
+<h3> Docker Setup</h3>
 
 Go to blue directory and build image using following command
 #./run_docker.sh 
@@ -36,8 +37,6 @@ Now go to green directory and build image using following command
 
 Upload image
 #./upload_docker.sh 
-
-ensure EKS is running 
 
 Create replication controller for blue Image
 #kubectl apply -f ./blue/blue-controller2.json 
