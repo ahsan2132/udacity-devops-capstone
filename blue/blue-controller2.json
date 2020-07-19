@@ -2,26 +2,26 @@
    "kind":"ReplicationController",
    "apiVersion":"v1",
    "metadata":{
-      "name":"blue",
+      "name":"blue2",
       "labels":{
-         "app":"blue"
+         "app":"blue2"
       }
    },
    "spec":{
       "replicas":1,
       "selector":{
-         "app":"blue"
+         "app":"blue2"
       },
       "template":{
          "metadata":{
             "labels":{
-               "app":"blue"
+               "app":"blue2"
             }
          },
          "spec":{
             "containers":[
                {
-                  "name":"blue",
+                  "name":"blue2",
                   "image":"ahsan2132/testblueimage",
                   "ports":[
                      {
